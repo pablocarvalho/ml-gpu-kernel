@@ -34,6 +34,7 @@ parser.add_argument("-m","--mode", type=str, choices=['ce','attempts'], help="mo
 parser.add_argument("-s","--seed", type=int, help="seed used for randomizing folds creation. Original seed from paper will be used if not set")
 parser.add_argument("-i","--input",type=str, help="input file, a CSV separated by semicolons with last column composed by the expected classification", required=True)
 parser.add_argument("-o","--output", type=str, help="outputs a that contains the classification value for each used classifier")
+parser.add_argument("-f","--features-number", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
 args = parser.parse_args()
 
 inputFile = args.input
@@ -41,12 +42,15 @@ origin = pandas.read_csv(inputFile,sep=';')
 mode = args.mode
 seed = args.seed
 outputfile = args.output
+features = args.features-number
 
 if (mode == 'ce' and seed is None):
 	seed = 929416
+	features = 6
 
 if (mode == 'attempts' and seed is None):
 	seed = 204651
+	features = 4
 
 
 class Results:
@@ -185,10 +189,10 @@ def train_and_test(origin,origin_Y):
 	splits = 10
 
 	if(mode == 'attempts'):
-		skf = StratifiedKFold(n_splits=splits,shuffle=True,random_state=seed)			#Used for concurrency/attempts experiment
+		skf = StratifiedKFold(n_splits=splits,shuffle=True,random_state=seed)		
 	
 	if(mode == 'ce'):
-		skf = StratifiedKFold(n_splits=splits,shuffle=True,random_state=seed)		#Used for interference experiment
+		skf = StratifiedKFold(n_splits=splits,shuffle=True,random_state=seed)		
 
 	clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1, early_stopping = True, validation_fraction = 0.22)
 	knn = KNeighborsClassifier()
@@ -311,7 +315,7 @@ for variables in rfe:
 	origin_copy = origin[variables]
 
 	if(mode == "attempts"):			
-		if (len(list(origin_copy.columns.values)) == 4):
+		if (len(list(origin_copy.columns.values)) == features):
 			
 			print "STARTING TRAINING"
 			print "considering variables: " + str(list(origin_copy.columns.values))
@@ -323,7 +327,7 @@ for variables in rfe:
 				output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
 
 	elif(mode == "ce"):				
-		if (len(list(origin_copy.columns.values)) == 6):			
+		if (len(list(origin_copy.columns.values)) == features):			
 
 			print "STARTING TRAINING"
 			print "considering variables: " + str(list(origin_copy.columns.values))
