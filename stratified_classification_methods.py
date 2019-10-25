@@ -327,7 +327,7 @@ origin = origin.drop(["k1_name"],axis = 1)
 origin = origin.drop(["k2_name"],axis = 1)
 
 
-print "contagem por classe: " 
+print "classes count: " 
 print origin["classification"].value_counts()
 origin_Y = origin.classification
 
