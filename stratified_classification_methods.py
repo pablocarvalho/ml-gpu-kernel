@@ -30,11 +30,12 @@ from sklearn.svm import SVR
 from xgboost import plot_tree
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-m","--mode", type=str, choices=['ce','attempts'], help="mode to execute", required=True)
+parser.add_argument("-m","--mode", type=str, choices=['ce','attempts'], help="mode to execute, ce stands for interference and attempts to concurrency", required=True)
 parser.add_argument("-s","--seed", type=int, help="seed used for randomizing folds creation. Original seed from paper will be used if not set")
 parser.add_argument("-i","--input",type=str, help="input file, a CSV separated by semicolons with last column composed by the expected classification", required=True)
 parser.add_argument("-o","--output", type=str, help="outputs a that contains the classification value for each used classifier")
-parser.add_argument("-f","--features-number", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
+parser.add_argument("-v","--verbose", help="prints detailed accuracy, precision, recall and kappa score for each fold",action='store_true')
+parser.add_argument("-f","--features", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
 args = parser.parse_args()
 
 inputFile = args.input
@@ -42,7 +43,11 @@ origin = pandas.read_csv(inputFile,sep=';')
 mode = args.mode
 seed = args.seed
 outputfile = args.output
-features = args.features-number
+features = args.features
+verbose = False
+
+if(args.verbose):
+	verbose = True
 
 if (mode == 'ce' and seed is None):
 	seed = 929416
@@ -110,14 +115,6 @@ class Results:
 
 		print tabulate.tabulate(table,headers=head)
 
-		
-
-# mode = "ce"
-#mode = "concurrency"
-# mode = "attempts"
-#classificator = 'concurrency'
-# classificator = 'classification'
-#mode = "throughput"
 
 def plot_confusion_matrix(cm, class_names,filename, title='Confusion matrix', cmap=plt.cm.Blues):
 	plt.clf()
@@ -220,10 +217,19 @@ def train_and_test(origin,origin_Y):
 		clf.fit(origin.iloc[train], origin_Y.iloc[train])
 		mlp_prediction = clf.predict(origin.iloc[test])
 		mpl_confusionmatrix = confusion_matrix(origin_Y.iloc[test], mlp_prediction)
-		mlp_prediction_list.extend(mlp_prediction)
+		mlp_prediction_list.extend(mlp_prediction)		
 
 		mlp_results.addResult(accuracy_score(origin_Y.iloc[test],mlp_prediction),precision_score(origin_Y.iloc[test],mlp_prediction,average='binary'),
 			recall_score(origin_Y.iloc[test],mlp_prediction,average='binary'),cohen_kappa_score(origin_Y.iloc[test],mlp_prediction))
+
+		if(verbose == True):
+			print "\n"
+			print "Multi-layer Perceptron results:"
+			print "accuracy_score: " +  str(mlp_results.accuracies[mlp_results.lastPos-1])
+			print "precision_score :" + str(mlp_results.precisions[mlp_results.lastPos-1])
+			print "recall_score: "+ str(mlp_results.recalls[mlp_results.lastPos-1])
+			print "kappa_score: "+ str(mlp_results.kappas[mlp_results.lastPos-1])
+			print "\n"
 
 
 		knn.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -234,22 +240,49 @@ def train_and_test(origin,origin_Y):
 		knn_results.addResult(accuracy_score(origin_Y.iloc[test],knn_prediction), precision_score(origin_Y.iloc[test],knn_prediction,average='binary'),
 			recall_score(origin_Y.iloc[test],knn_prediction,average='binary'),cohen_kappa_score(origin_Y.iloc[test],knn_prediction))
 
+		if(verbose == True):
+			print "\n"
+			print "Multi-layer Perceptron results:"
+			print "accuracy_score: " +  str(knn_results.accuracies[knn_results.lastPos-1])
+			print "precision_score :" + str(knn_results.precisions[knn_results.lastPos-1])
+			print "recall_score: "+ str(knn_results.recalls[knn_results.lastPos-1])
+			print "kappa_score: "+ str(knn_results.kappas[knn_results.lastPos-1])
+			print "\n"
+
+
 		logistic.fit(origin.iloc[train], origin_Y.iloc[train])
 		logistic_prediction = logistic.predict(origin.iloc[test])
 		logistic_confusionmatrix = confusion_matrix(origin_Y.iloc[test], logistic_prediction)
 		lrg_prediction_list.extend(logistic_prediction)
-	
+
 		logistic_results.addResult(accuracy_score(origin_Y.iloc[test],logistic_prediction),precision_score(origin_Y.iloc[test],logistic_prediction,average='binary'),
 			recall_score(origin_Y.iloc[test],logistic_prediction,average='binary'),cohen_kappa_score(origin_Y.iloc[test],logistic_prediction))
+
+		if(verbose == True):
+			print "\n"
+			print "Multi-layer Perceptron results:"
+			print "accuracy_score: " +  str(logistic_results.accuracies[logistic_results.lastPos-1])
+			print "precision_score :" + str(logistic_results.precisions[logistic_results.lastPos-1])
+			print "recall_score: "+ str(logistic_results.recalls[logistic_results.lastPos-1])
+			print "kappa_score: "+ str(logistic_results.kappas[logistic_results.lastPos-1])
+			print "\n"
 
 		xgb.fit(origin.iloc[train], origin_Y.iloc[train])
 		xgb_prediction = xgb.predict(origin.iloc[test])
 		xgb_confusionmatrix = confusion_matrix(origin_Y.iloc[test], xgb_prediction)
 		xgb_prediction_list.extend(xgb_prediction)
-		
 
 		xgb_results.addResult(accuracy_score(origin_Y.iloc[test],xgb_prediction),precision_score(origin_Y.iloc[test],xgb_prediction,average='binary'),
 			recall_score(origin_Y.iloc[test],xgb_prediction,average='binary'),cohen_kappa_score(origin_Y.iloc[test],xgb_prediction))
+
+		if(verbose == True):
+			print "\n"
+			print "Multi-layer Perceptron results:"
+			print "accuracy_score: " +  str(xgb_results.accuracies[xgb_results.lastPos-1])
+			print "precision_score :" + str(xgb_results.precisions[xgb_results.lastPos-1])
+			print "recall_score: "+ str(xgb_results.recalls[xgb_results.lastPos-1])
+			print "kappa_score: "+ str(xgb_results.kappas[xgb_results.lastPos-1])
+			print "\n"
 					
 			
 
