@@ -1,0 +1,883 @@
+number of tries: 
+0    1277
+5    1001
+4     426
+1     370
+3     273
+2     253
+Name: attempts_of_5, dtype: int64
+contagem por classe: 
+0    2173
+1    1427
+Name: classification, dtype: int64
+all variables : ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_registers', 'k2_registers', 'k1_shared_mem_B', 'k2_shared_mem_B']
+
+
+7
+6
+5
+4
+3
+2
+7
+6
+5
+4
+3
+2
+7
+6
+5
+4
+3
+2
+testing for Recursive Feature Selection ================================================================
+STARTING TRAINING
+considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_registers', 'k2_registers']
+===========================step 1============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.626038781163
+precision_score :0.536363636364
+recall_score: 0.412587412587
+kappa_score: 0.186027090675
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.692520775623
+precision_score :0.681818181818
+recall_score: 0.41958041958
+kappa_score: 0.311766827542
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598337950139
+precision_score :0.25
+recall_score: 0.00699300699301
+kappa_score: -0.00812741944803
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.82271468144
+precision_score :0.837606837607
+recall_score: 0.685314685315
+kappa_score: 0.617470777178
+
+
+===========================step 2============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.573407202216
+precision_score :0.465838509317
+recall_score: 0.524475524476
+kappa_score: 0.127225344595
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.698060941828
+precision_score :0.68085106383
+recall_score: 0.447552447552
+kappa_score: 0.32935080872
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.601108033241
+precision_score :0.333333333333
+recall_score: 0.00699300699301
+kappa_score: -0.00262305199815
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.797783933518
+precision_score :0.830188679245
+recall_score: 0.615384615385
+kappa_score: 0.557635170295
+
+
+===========================step 3============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.603878116343
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.767313019391
+precision_score :0.747899159664
+recall_score: 0.622377622378
+kappa_score: 0.499174208892
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598337950139
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0110482297723
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.850415512465
+precision_score :0.839694656489
+recall_score: 0.769230769231
+kappa_score: 0.682756151543
+
+
+===========================step 4============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.744444444444
+precision_score :0.742857142857
+recall_score: 0.545454545455
+kappa_score: 0.441012658228
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.5
+recall_score: 0.00699300699301
+kappa_score: 0.00286666150151
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.833333333333
+precision_score :0.826771653543
+recall_score: 0.734265734266
+kappa_score: 0.645192023391
+
+
+===========================step 5============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.630555555556
+precision_score :0.548076923077
+recall_score: 0.398601398601
+kappa_score: 0.190888197918
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.713888888889
+precision_score :0.688679245283
+recall_score: 0.51048951049
+kappa_score: 0.37495785854
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.6
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.00554758117702
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.825
+precision_score :0.877358490566
+recall_score: 0.65034965035
+kappa_score: 0.617692670757
+
+
+===========================step 6============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.711111111111
+precision_score :0.678899082569
+recall_score: 0.517482517483
+kappa_score: 0.371242400833
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.786111111111
+precision_score :0.84375
+recall_score: 0.566433566434
+kappa_score: 0.526833265055
+
+
+===========================step 7============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.677777777778
+precision_score :0.617391304348
+recall_score: 0.496503496503
+kappa_score: 0.303883980663
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.794444444444
+precision_score :0.834951456311
+recall_score: 0.601398601399
+kappa_score: 0.549253832358
+
+
+===========================step 8============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.604456824513
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.713091922006
+precision_score :0.672566371681
+recall_score: 0.535211267606
+kappa_score: 0.378046524145
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598885793872
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0111093725552
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.816155988858
+precision_score :0.811475409836
+recall_score: 0.697183098592
+kappa_score: 0.605940659925
+
+
+===========================step 9============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.604456824513
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.66295264624
+precision_score :0.60824742268
+recall_score: 0.415492957746
+kappa_score: 0.254304499339
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.604456824513
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.757660167131
+precision_score :0.772277227723
+recall_score: 0.549295774648
+kappa_score: 0.466585828224
+
+
+===========================step 10============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.615598885794
+precision_score :0.526315789474
+recall_score: 0.281690140845
+kappa_score: 0.125904230919
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.713091922006
+precision_score :0.685714285714
+recall_score: 0.507042253521
+kappa_score: 0.371705775407
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598885793872
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0111093725552
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.805013927577
+precision_score :0.790322580645
+recall_score: 0.69014084507
+kappa_score: 0.583098311158
+
+
+MLP confusion matrix
+
+[[181  36]
+ [102  40]]
+
+
+                accuracy    precision    recall      kappa
+------------  ----------  -----------  --------  ---------
+mean            0.606673     0.207659  0.161735  0.0630045
+standard dev    0.014815     0.25512   0.205415  0.0796159
+last val        0.615599     0.526316  0.28169   0.125904
+min val         0.573407     0         0         0
+max val         0.630556     0.548077  0.524476  0.190888
+KNN confusion matrix
+
+[[184  33]
+ [ 70  72]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.709425     0.680492   0.501719   0.363545
+standard dev   0.0286412    0.0421849  0.0592365  0.0664876
+last val       0.713092     0.685714   0.507042   0.371706
+min val        0.662953     0.608247   0.415493   0.254304
+max val        0.767313     0.747899   0.622378   0.499174
+Logistic Regression confusion matrix
+
+[[215   2]
+ [142   0]]
+
+
+                accuracy    precision      recall        kappa
+------------  ----------  -----------  ----------  -----------
+mean          0.600835       0.108333  0.0020979   -0.00466984
+standard dev  0.00212795     0.175     0.0032046    0.00512596
+last val      0.598886       0         0           -0.0111094
+min val       0.598338       0         0           -0.0111094
+max val       0.604457       0.5       0.00699301   0.00286666
+XGBoost
+
+[[191  26]
+ [ 44  98]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.808863     0.82644    0.6559     0.585246
+standard dev   0.0251311    0.0278233  0.0683655  0.0593093
+last val       0.805014     0.790323   0.690141   0.583098
+min val        0.75766      0.772277   0.549296   0.466586
+max val        0.850416     0.877358   0.769231   0.682756
+testing for all variables ===============================================================================
+STARTING TRAINING
+considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_registers', 'k2_registers', 'k1_shared_mem_B', 'k2_shared_mem_B']
+===========================step 1============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.620498614958
+precision_score :0.666666666667
+recall_score: 0.0839160839161
+kappa_score: 0.0663734355238
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.700831024931
+precision_score :0.637795275591
+recall_score: 0.566433566434
+kappa_score: 0.362399424347
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.601108033241
+precision_score :0.333333333333
+recall_score: 0.00699300699301
+kappa_score: -0.00262305199815
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.80055401662
+precision_score :0.779527559055
+recall_score: 0.692307692308
+kappa_score: 0.574932949565
+
+
+===========================step 2============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.642659279778
+precision_score :0.9375
+recall_score: 0.104895104895
+kappa_score: 0.118395395945
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.703601108033
+precision_score :0.666666666667
+recall_score: 0.503496503497
+kappa_score: 0.353230748623
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.595567867036
+precision_score :0.2
+recall_score: 0.00699300699301
+kappa_score: -0.0136159083042
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.81163434903
+precision_score :0.81512605042
+recall_score: 0.678321678322
+kappa_score: 0.594569597675
+
+
+===========================step 3============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.653739612188
+precision_score :0.704545454545
+recall_score: 0.216783216783
+kappa_score: 0.178395207836
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.753462603878
+precision_score :0.707692307692
+recall_score: 0.643356643357
+kappa_score: 0.476496179102
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598337950139
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0110482297723
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.836565096953
+precision_score :0.823076923077
+recall_score: 0.748251748252
+kappa_score: 0.652958141202
+
+
+===========================step 4============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.647222222222
+precision_score :0.807692307692
+recall_score: 0.146853146853
+kappa_score: 0.143884353232
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.747222222222
+precision_score :0.713114754098
+recall_score: 0.608391608392
+kappa_score: 0.458583988894
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.608333333333
+precision_score :1.0
+recall_score: 0.013986013986
+kappa_score: 0.0168125823197
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.830555555556
+precision_score :0.810606060606
+recall_score: 0.748251748252
+kappa_score: 0.641457680251
+
+
+===========================step 5============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.641666666667
+precision_score :0.733333333333
+recall_score: 0.153846153846
+kappa_score: 0.135195530726
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.736111111111
+precision_score :0.7
+recall_score: 0.587412587413
+kappa_score: 0.433399602386
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.597222222222
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0110792593166
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.838888888889
+precision_score :0.863247863248
+recall_score: 0.706293706294
+kappa_score: 0.652798563304
+
+
+===========================step 6============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.622222222222
+precision_score :0.581395348837
+recall_score: 0.174825174825
+kappa_score: 0.104313782884
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.744444444444
+precision_score :0.704
+recall_score: 0.615384615385
+kappa_score: 0.454635270871
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.794444444444
+precision_score :0.785123966942
+recall_score: 0.664335664336
+kappa_score: 0.559188536254
+
+
+===========================step 7============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.633333333333
+precision_score :0.789473684211
+recall_score: 0.104895104895
+kappa_score: 0.101463525319
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.677777777778
+precision_score :0.617391304348
+recall_score: 0.496503496503
+kappa_score: 0.303883980663
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.602777777778
+precision_score :0.0
+recall_score: 0.0
+kappa_score: 0.0
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.811111111111
+precision_score :0.809917355372
+recall_score: 0.685314685315
+kappa_score: 0.594930006288
+
+
+===========================step 8============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.632311977716
+precision_score :0.708333333333
+recall_score: 0.119718309859
+kappa_score: 0.102125885786
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.768802228412
+precision_score :0.703448275862
+recall_score: 0.718309859155
+kappa_score: 0.518261038268
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.598885793872
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.0111093725552
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.827298050139
+precision_score :0.807692307692
+recall_score: 0.739436619718
+kappa_score: 0.63348043736
+
+
+===========================step 9============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.607242339833
+precision_score :0.518518518519
+recall_score: 0.0985915492958
+kappa_score: 0.0449785861178
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.715877437326
+precision_score :0.678571428571
+recall_score: 0.535211267606
+kappa_score: 0.383306948702
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.607242339833
+precision_score :1.0
+recall_score: 0.00704225352113
+kappa_score: 0.00850096958063
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.788300835655
+precision_score :0.817307692308
+recall_score: 0.598591549296
+kappa_score: 0.535812719045
+
+
+===========================step 10============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.657381615599
+precision_score :0.851851851852
+recall_score: 0.161971830986
+kappa_score: 0.166896213422
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.74651810585
+precision_score :0.707317073171
+recall_score: 0.612676056338
+kappa_score: 0.457352623623
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.601671309192
+precision_score :0.0
+recall_score: 0.0
+kappa_score: -0.00556284645369
+
+
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.824512534819
+precision_score :0.801526717557
+recall_score: 0.739436619718
+kappa_score: 0.628028222292
+
+
+MLP confusion matrix
+
+[[213   4]
+ [119  23]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean            0.635828     0.729931  0.13663    0.116202
+standard dev    0.015006     0.118078  0.0393096  0.0396007
+last val        0.657382     0.851852  0.161972   0.166896
+min val         0.607242     0.518519  0.0839161  0.0449786
+max val         0.657382     0.9375    0.216783   0.178395
+KNN confusion matrix
+
+[[181  36]
+ [ 55  87]]
+
+
+                accuracy    precision     recall     kappa
+------------  ----------  -----------  ---------  --------
+mean            0.729465    0.6836     0.588718   0.420155
+standard dev    0.027098    0.0314433  0.0637017  0.06302
+last val        0.746518    0.707317   0.612676   0.457353
+min val         0.677778    0.617391   0.496503   0.303884
+max val         0.768802    0.713115   0.71831    0.518261
+Logistic Regression confusion matrix
+
+[[216   1]
+ [142   0]]
+
+
+                accuracy    precision      recall        kappa
+------------  ----------  -----------  ----------  -----------
+mean          0.601392       0.253333  0.00350143  -0.00297251
+standard dev  0.00391566     0.388501  0.00469474   0.00926294
+last val      0.601671       0         0           -0.00556285
+min val       0.595568       0         0           -0.0136159
+max val       0.608333       1         0.013986     0.0168126
+XGBoost
+
+[[191  26]
+ [ 37 105]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.816386     0.811315   0.700054   0.606816
+standard dev   0.0169432    0.0216647  0.0448408  0.0390155
+last val       0.824513     0.801527   0.739437   0.628028
+min val        0.788301     0.779528   0.598592   0.535813
+max val        0.838889     0.863248   0.748252   0.652958
