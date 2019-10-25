@@ -6,6 +6,11 @@
 - XGboost python libraries
   - follow the steps in https://pypi.org/project/xgboost/
 
+- sqlite3
+  - for a friendly experience when consulting the databases install DB Browser for SQLite   
+    https://sqlitebrowser.org/
+  
+
 ### Repository Structure
 
 - stratified_classification_methods.py :  machine learning script
