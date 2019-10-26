@@ -242,7 +242,7 @@ def train_and_test(origin,origin_Y):
 
 		if(verbose == True):
 			print "\n"
-			print "Multi-layer Perceptron results:"
+			print "K Nearest neighbor results:"
 			print "accuracy_score: " +  str(knn_results.accuracies[knn_results.lastPos-1])
 			print "precision_score :" + str(knn_results.precisions[knn_results.lastPos-1])
 			print "recall_score: "+ str(knn_results.recalls[knn_results.lastPos-1])
@@ -260,7 +260,7 @@ def train_and_test(origin,origin_Y):
 
 		if(verbose == True):
 			print "\n"
-			print "Multi-layer Perceptron results:"
+			print "Logistic regression results:"
 			print "accuracy_score: " +  str(logistic_results.accuracies[logistic_results.lastPos-1])
 			print "precision_score :" + str(logistic_results.precisions[logistic_results.lastPos-1])
 			print "recall_score: "+ str(logistic_results.recalls[logistic_results.lastPos-1])
@@ -277,7 +277,7 @@ def train_and_test(origin,origin_Y):
 
 		if(verbose == True):
 			print "\n"
-			print "Multi-layer Perceptron results:"
+			print "XGboost results:"
 			print "accuracy_score: " +  str(xgb_results.accuracies[xgb_results.lastPos-1])
 			print "precision_score :" + str(xgb_results.precisions[xgb_results.lastPos-1])
 			print "recall_score: "+ str(xgb_results.recalls[xgb_results.lastPos-1])
