@@ -141,7 +141,6 @@ def evaluateVariables(X,y):
 	rfe = []
 
 	for i in reversed (range (2,len(X.columns))):
-		print i
 		kbest_i = SelectKBest(f_classif, k=i)
 		kbest_i.fit_transform(X,y)
 		mask = kbest_i.get_support()
@@ -152,7 +151,6 @@ def evaluateVariables(X,y):
 		#print "\n"
 
 	for i in reversed (range (2,len(X.columns))):
-		print i
 		kbest_i = SelectKBest(mutual_info_classif, k=i)
 		kbest_i.fit_transform(X,y)
 		mask = kbest_i.get_support()
@@ -163,7 +161,6 @@ def evaluateVariables(X,y):
 		#print "\n"
 
 	for i in reversed (range (2,len(X.columns))):	
-		print i
 		#print "Recursive Feature Selection"
 		#estimator = SVR(kernel="linear")
 		axgb = XGBClassifier(nthread=6)
@@ -210,7 +207,8 @@ def train_and_test(origin,origin_Y):
 
 	for train, test in skf.split(origin, origin_Y):
 
-		print "===========================step " + str(step)+"============================"
+		if(verbose == True):
+			print "===========================step " + str(step)+"============================"
 
 		step+=1
 		
@@ -229,6 +227,7 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(mlp_results.precisions[mlp_results.lastPos-1])
 			print "recall_score: "+ str(mlp_results.recalls[mlp_results.lastPos-1])
 			print "kappa_score: "+ str(mlp_results.kappas[mlp_results.lastPos-1])
+			# print clf.feature_importances_
 			print "\n"
 
 
@@ -247,6 +246,7 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(knn_results.precisions[knn_results.lastPos-1])
 			print "recall_score: "+ str(knn_results.recalls[knn_results.lastPos-1])
 			print "kappa_score: "+ str(knn_results.kappas[knn_results.lastPos-1])
+			# print knn.feature_importances_
 			print "\n"
 
 
@@ -265,6 +265,7 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(logistic_results.precisions[logistic_results.lastPos-1])
 			print "recall_score: "+ str(logistic_results.recalls[logistic_results.lastPos-1])
 			print "kappa_score: "+ str(logistic_results.kappas[logistic_results.lastPos-1])
+			# print logistic.feature_importances_
 			print "\n"
 
 		xgb.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -281,7 +282,7 @@ def train_and_test(origin,origin_Y):
 			print "accuracy_score: " +  str(xgb_results.accuracies[xgb_results.lastPos-1])
 			print "precision_score :" + str(xgb_results.precisions[xgb_results.lastPos-1])
 			print "recall_score: "+ str(xgb_results.recalls[xgb_results.lastPos-1])
-			print "kappa_score: "+ str(xgb_results.kappas[xgb_results.lastPos-1])
+			print "kappa_score: "+ str(xgb_results.kappas[xgb_results.lastPos-1])			
 			print "\n"
 					
 			
@@ -291,23 +292,52 @@ def train_and_test(origin,origin_Y):
 	print "\n"
 
 	mlp_results.printStatistics()
+	print "\n"
+	print "\n"
 
 
 	print "KNN confusion matrix\n"
 	print knn_confusionmatrix
 	print "\n"
 	knn_results.printStatistics()
+	print "\n"
+	print "\n"
 
 
 	print "Logistic Regression confusion matrix\n"
 	print logistic_confusionmatrix
 	print "\n"
 	logistic_results.printStatistics()	
+	print "\n"
+	print "\n"
 
 	print "XGBoost\n"
 	print xgb_confusionmatrix
 	print "\n"
 	xgb_results.printStatistics()
+	print "\n"
+	
+	print "XGBoost Feature importances: "
+	
+	headers = ['Score','Parameter']
+	importanceGain = xgb.get_booster().get_score(importance_type='gain')
+	data = sorted([(v,k) for k,v in importanceGain.items()], reverse=True) # flip the code and name and sort
+	print "Feature Importance (gain):\n"
+	print tabulate.tabulate(data, headers=headers)	 
+	print "\n"
+
+
+	weightGain = xgb.get_booster().get_score(importance_type='weight')
+	data = sorted([(v,k) for k,v in weightGain.items()], reverse=True) # flip the code and name and sort
+	print "Feature Importance (weight):\n"
+	print tabulate.tabulate(data, headers=headers)	 
+	print "\n"
+
+	coverGain = xgb.get_booster().get_score(importance_type='cover')
+	data = sorted([(v,k) for k,v in coverGain.items()], reverse=True) # flip the code and name and sort
+	print "Feature Importance (cover):\n"
+	print tabulate.tabulate(data, headers=headers)	 
+	print "\n"
 
 	output_table = DataFrame({'mlp':mlp_prediction_list,'knn':knn_prediction_list,'logistic_regression':lrg_prediction_list , 'xgb':xgb_prediction_list})
 	return output_table
