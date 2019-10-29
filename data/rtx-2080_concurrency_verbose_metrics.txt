@@ -13,24 +13,6 @@ Name: classification, dtype: int64
 all variables : ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_registers', 'k2_registers', 'k1_shared_mem_B', 'k2_shared_mem_B']
 
 
-7
-6
-5
-4
-3
-2
-7
-6
-5
-4
-3
-2
-7
-6
-5
-4
-3
-2
 testing for Recursive Feature Selection ================================================================
 STARTING TRAINING
 considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_registers']
@@ -417,6 +399,10 @@ standard dev  0.00623394    0.0144594  0.0263085  0.0889783
 last val      0.758209      0.758209   1          0
 min val       0.755224      0.755952   0.929134   0
 max val       0.771513      0.794702   1          0.229749
+
+
+
+
 KNN confusion matrix
 
 [[ 37  44]
@@ -430,6 +416,10 @@ standard dev   0.0152641    0.0128879  0.0178251  0.0484666
 last val       0.791045     0.838235   0.897638   0.383446
 min val        0.758209     0.819149   0.866667   0.296164
 max val        0.816024     0.863281   0.92549    0.44694
+
+
+
+
 Logistic Regression confusion matrix
 
 [[  0  81]
@@ -443,6 +433,10 @@ standard dev  0.000740544  0.000740544         0        0
 last val      0.758209     0.758209            1        0
 min val       0.755952     0.755952            1        0
 max val       0.758209     0.758209            1        0
+
+
+
+
 XGBoost
 
 [[ 19  62]
@@ -456,6 +450,39 @@ standard dev   0.0174368    0.0130493  0.0145074  0.0658924
 last val       0.776119     0.79538    0.948819   0.230969
 min val        0.776119     0.79538    0.929134   0.230969
 max val        0.833828     0.837288   0.972549   0.459255
+
+
+XGBoost Feature importances: 
+Feature Importance (gain):
+
+  Score  Parameter
+-------  --------------------
+8.74143  k2_blocks_per_grid
+7.15848  k1_blocks_per_grid
+6.85411  k1_threads_per_block
+5.83033  k2_registers
+
+
+Feature Importance (weight):
+
+  Score  Parameter
+-------  --------------------
+    205  k2_blocks_per_grid
+    198  k1_blocks_per_grid
+    153  k2_registers
+    135  k1_threads_per_block
+
+
+Feature Importance (cover):
+
+  Score  Parameter
+-------  --------------------
+289.41   k2_blocks_per_grid
+220.107  k1_blocks_per_grid
+201.825  k1_threads_per_block
+160.222  k2_registers
+
+
 testing for all variables ===============================================================================
 STARTING TRAINING
 considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_registers', 'k2_registers', 'k1_shared_mem_B', 'k2_shared_mem_B']
@@ -842,6 +869,10 @@ standard dev   0.0167878    0.0155257  0.0258378  0.0930557
 last val       0.734328     0.772277   0.92126    0.087417
 min val        0.734328     0.756677   0.917323   0
 max val        0.792285     0.809365   1          0.310395
+
+
+
+
 KNN confusion matrix
 
 [[ 30  51]
@@ -855,6 +886,10 @@ standard dev   0.0116436   0.00915283  0.0137719  0.0354628
 last val       0.770149    0.817204    0.897638   0.299487
 min val        0.75        0.817204    0.854331   0.28979
 max val        0.792285    0.84556     0.898039   0.390534
+
+
+
+
 Logistic Regression confusion matrix
 
 [[  2  79]
@@ -868,6 +903,10 @@ standard dev  0.00273608   0.00256061  0.00465727  0.0183994
 last val      0.758209     0.761329    0.992126    0.0248679
 min val       0.752976     0.755952    0.984314    0
 max val       0.762611     0.763636    1           0.0536661
+
+
+
+
 XGBoost
 
 [[ 24  57]
@@ -881,3 +920,48 @@ standard dev   0.0132079   0.00999907  0.00970185  0.048807
 last val       0.779104    0.806122    0.933071    0.275739
 min val        0.779104    0.806122    0.929134    0.275739
 max val        0.824926    0.837456    0.956863    0.438635
+
+
+XGBoost Feature importances: 
+Feature Importance (gain):
+
+   Score  Parameter
+--------  --------------------
+12.1572   k2_threads_per_block
+ 9.95777  k1_threads_per_block
+ 9.50571  k1_blocks_per_grid
+ 9.29694  k2_blocks_per_grid
+ 5.47762  k1_shared_mem_B
+ 5.37953  k2_registers
+ 5.21951  k2_shared_mem_B
+ 4.36229  k1_registers
+
+
+Feature Importance (weight):
+
+  Score  Parameter
+-------  --------------------
+    161  k2_blocks_per_grid
+    137  k1_blocks_per_grid
+     84  k2_registers
+     76  k1_threads_per_block
+     67  k2_threads_per_block
+     67  k1_registers
+     63  k1_shared_mem_B
+     33  k2_shared_mem_B
+
+
+Feature Importance (cover):
+
+  Score  Parameter
+-------  --------------------
+293.99   k2_threads_per_block
+272.669  k2_blocks_per_grid
+236.48   k1_blocks_per_grid
+229.511  k2_shared_mem_B
+220.742  k1_threads_per_block
+193.434  k1_shared_mem_B
+145.597  k2_registers
+100.812  k1_registers
+
+
