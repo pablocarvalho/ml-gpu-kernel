@@ -26,6 +26,7 @@ from sklearn.feature_selection import f_classif
 from sklearn.feature_selection import mutual_info_classif
 from sklearn.feature_selection import RFE
 from sklearn.svm import SVR
+from sklearn.model_selection import GridSearchCV
 
 from xgboost import plot_tree
 
@@ -35,6 +36,7 @@ parser.add_argument("-s","--seed", type=int, help="seed used for randomizing fol
 parser.add_argument("-i","--input",type=str, help="input file, a CSV separated by semicolons with last column composed by the expected classification", required=True)
 parser.add_argument("-o","--output", type=str, help="outputs a that contains the classification value for each used classifier")
 parser.add_argument("-v","--verbose", help="prints detailed accuracy, precision, recall and kappa score for each fold",action='store_true')
+parser.add_argument("-g","--grid-search", help="applies grid-search to the classifiers",action='store_true')
 parser.add_argument("-f","--features", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
 args = parser.parse_args()
 
@@ -45,9 +47,13 @@ seed = args.seed
 outputfile = args.output
 features = args.features
 verbose = False
+gridSearch= False
 
 if(args.verbose):
 	verbose = True
+
+if(args.grid_search):
+	gridSearch=True
 
 if (mode == 'ce' and seed is None):
 	seed = 929416
@@ -192,6 +198,38 @@ def train_and_test(origin,origin_Y):
 	knn = KNeighborsClassifier()
 	logistic = linear_model.LogisticRegression()
 	xgb = XGBClassifier(nthread=6)
+
+
+	if( gridSearch == True):
+		MLP_params = {
+			"solver" : ['sgd', 'lbfgs'],
+			"learning_rate" : ['invscaling', 'adaptive'],
+			"early_stopping" : [True],
+			"hidden_layer_sizes" : [(100,), (100, 100)]
+		}
+
+		LR_params = {
+			"penalty" : ['l2'],
+			"solver" : ['lbfgs', 'liblinear', 'sag']
+		}
+
+
+		KNN_params = {
+			"n_neighbors" : [3,5,7],
+			"p" : [1,2]
+		}
+
+		XGB_params = {
+			"n_estimators" : [10, 50, 100],
+			"booster" : ['gbtree', 'gblinear']
+		}
+
+		clf = GridSearchCV(MLPClassifier(alpha=1e-5,random_state=1, validation_fraction = 0.22),n_jobs=8,cv=skf,param_grid = MLP_params,refit=True,return_train_score=True)
+		knn = GridSearchCV(KNeighborsClassifier(),n_jobs=8,cv=skf,param_grid = KNN_params,refit=True,return_train_score=True)
+		logistic = GridSearchCV(linear_model.LogisticRegression(),n_jobs=8,cv=skf,param_grid = LR_params,refit=True,return_train_score=True)
+		xgb = GridSearchCV(XGBClassifier(nthread=6),n_jobs=8,cv=skf,param_grid = XGB_params,refit=True,return_train_score=True)
+
+
 	step = 1
 
 	mlp_results = Results(splits)
@@ -227,7 +265,6 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(mlp_results.precisions[mlp_results.lastPos-1])
 			print "recall_score: "+ str(mlp_results.recalls[mlp_results.lastPos-1])
 			print "kappa_score: "+ str(mlp_results.kappas[mlp_results.lastPos-1])
-			# print clf.feature_importances_
 			print "\n"
 
 
@@ -246,7 +283,6 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(knn_results.precisions[knn_results.lastPos-1])
 			print "recall_score: "+ str(knn_results.recalls[knn_results.lastPos-1])
 			print "kappa_score: "+ str(knn_results.kappas[knn_results.lastPos-1])
-			# print knn.feature_importances_
 			print "\n"
 
 
@@ -265,7 +301,6 @@ def train_and_test(origin,origin_Y):
 			print "precision_score :" + str(logistic_results.precisions[logistic_results.lastPos-1])
 			print "recall_score: "+ str(logistic_results.recalls[logistic_results.lastPos-1])
 			print "kappa_score: "+ str(logistic_results.kappas[logistic_results.lastPos-1])
-			# print logistic.feature_importances_
 			print "\n"
 
 		xgb.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -320,20 +355,33 @@ def train_and_test(origin,origin_Y):
 	print "XGBoost Feature importances: "
 	
 	headers = ['Score','Parameter']
-	importanceGain = xgb.get_booster().get_score(importance_type='gain')
+	importanceGain = None
+	if(gridSearch == True):
+		importanceGain = xgb.best_estimator_.get_booster().get_score(importance_type='gain')
+	else:
+		importanceGain = xgb.get_booster().get_score(importance_type='gain')
 	data = sorted([(v,k) for k,v in importanceGain.items()], reverse=True) # flip the code and name and sort
 	print "Feature Importance (gain):\n"
 	print tabulate.tabulate(data, headers=headers)	 
 	print "\n"
 
 
-	weightGain = xgb.get_booster().get_score(importance_type='weight')
+	weightGain = None
+	if(gridSearch == True):
+		weightGain = xgb.best_estimator_.get_booster().get_score(importance_type='weight')
+	else:
+		weightGain = xgb.get_booster().get_score(importance_type='weight')
 	data = sorted([(v,k) for k,v in weightGain.items()], reverse=True) # flip the code and name and sort
 	print "Feature Importance (weight):\n"
 	print tabulate.tabulate(data, headers=headers)	 
 	print "\n"
 
-	coverGain = xgb.get_booster().get_score(importance_type='cover')
+	coverGain = None
+
+	if(gridSearch == True):
+		coverGain = xgb.best_estimator_.get_booster().get_score(importance_type='cover')
+	else:
+		coverGain = xgb.get_booster().get_score(importance_type='cover')
 	data = sorted([(v,k) for k,v in coverGain.items()], reverse=True) # flip the code and name and sort
 	print "Feature Importance (cover):\n"
 	print tabulate.tabulate(data, headers=headers)	 
