@@ -1,6 +1,6 @@
 ### Prerequisites
 
-- Python 2.7 (Anaconda Distribution is highly suggested)
+- Python 2.7 with Scikit-Learn (Anaconda Distribution is highly suggested)
   - https://www.anaconda.com/distribution/
 
 - XGboost python libraries ( at least version 0.82 to avoid bugs  )
