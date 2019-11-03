@@ -481,6 +481,482 @@ Feature Importance (cover):
 197.803  k2_threads_per_block
 
 
+testing for user selected variables ===============================================================================
+STARTING TRAINING
+considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_shared_mem_B', 'k2_shared_mem_B']
+===========================step 1============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.611764705882
+precision_score :0.625766871166
+recall_score: 0.728571428571
+kappa_score: 0.201739130435
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.670588235294
+precision_score :0.670731707317
+recall_score: 0.785714285714
+kappa_score: 0.322151898734
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.556862745098
+precision_score :0.56
+recall_score: 0.9
+kappa_score: 0.0418952618454
+
+
+
+
+XGboost results:
+accuracy_score: 0.713725490196
+precision_score :0.721854304636
+recall_score: 0.778571428571
+kappa_score: 0.416914643696
+
+
+===========================step 2============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.63137254902
+precision_score :0.625
+recall_score: 0.821428571429
+kappa_score: 0.229260450161
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.666666666667
+precision_score :0.677419354839
+recall_score: 0.75
+kappa_score: 0.318931657502
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.545098039216
+precision_score :0.557692307692
+recall_score: 0.828571428571
+kappa_score: 0.0301639344262
+
+
+
+
+XGboost results:
+accuracy_score: 0.682352941176
+precision_score :0.676646706587
+recall_score: 0.807142857143
+kappa_score: 0.344805709754
+
+
+===========================step 3============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.623529411765
+precision_score :0.626436781609
+recall_score: 0.778571428571
+kappa_score: 0.219138755981
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.647058823529
+precision_score :0.64880952381
+recall_score: 0.778571428571
+kappa_score: 0.271428571429
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.588235294118
+precision_score :0.579185520362
+recall_score: 0.914285714286
+kappa_score: 0.112676056338
+
+
+
+
+XGboost results:
+accuracy_score: 0.662745098039
+precision_score :0.660714285714
+recall_score: 0.792857142857
+kappa_score: 0.30380952381
+
+
+===========================step 4============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.572549019608
+precision_score :0.596273291925
+recall_score: 0.685714285714
+kappa_score: 0.122494080505
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.662745098039
+precision_score :0.670886075949
+recall_score: 0.757142857143
+kappa_score: 0.309291338583
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.521568627451
+precision_score :0.545918367347
+recall_score: 0.764285714286
+kappa_score: -0.0100649350649
+
+
+
+
+XGboost results:
+accuracy_score: 0.721568627451
+precision_score :0.706586826347
+recall_score: 0.842857142857
+kappa_score: 0.425693893735
+
+
+===========================step 5============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.619607843137
+precision_score :0.638709677419
+recall_score: 0.707142857143
+kappa_score: 0.222780832679
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.674509803922
+precision_score :0.688741721854
+recall_score: 0.742857142857
+kappa_score: 0.337039937353
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.545098039216
+precision_score :0.554545454545
+recall_score: 0.871428571429
+kappa_score: 0.0205298013245
+
+
+
+
+XGboost results:
+accuracy_score: 0.698039215686
+precision_score :0.711409395973
+recall_score: 0.757142857143
+kappa_score: 0.385926505082
+
+
+===========================step 6============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.580392156863
+precision_score :0.605095541401
+recall_score: 0.678571428571
+kappa_score: 0.141306058222
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.670588235294
+precision_score :0.697183098592
+recall_score: 0.707142857143
+kappa_score: 0.333748055988
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.525490196078
+precision_score :0.542986425339
+recall_score: 0.857142857143
+kappa_score: -0.0225352112676
+
+
+
+
+XGboost results:
+accuracy_score: 0.701960784314
+precision_score :0.707792207792
+recall_score: 0.778571428571
+kappa_score: 0.391522762951
+
+
+===========================step 7============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.623529411765
+precision_score :0.626436781609
+recall_score: 0.778571428571
+kappa_score: 0.219138755981
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.725490196078
+precision_score :0.71875
+recall_score: 0.821428571429
+kappa_score: 0.43690851735
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.580392156863
+precision_score :0.576036866359
+recall_score: 0.892857142857
+kappa_score: 0.0987613542527
+
+
+
+
+XGboost results:
+accuracy_score: 0.737254901961
+precision_score :0.729559748428
+recall_score: 0.828571428571
+kappa_score: 0.46146572104
+
+
+===========================step 8============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.653543307087
+precision_score :0.680555555556
+recall_score: 0.7
+kappa_score: 0.297460397284
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.685039370079
+precision_score :0.702702702703
+recall_score: 0.742857142857
+kappa_score: 0.359233097881
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.547244094488
+precision_score :0.56157635468
+recall_score: 0.814285714286
+kappa_score: 0.0354005679942
+
+
+
+
+XGboost results:
+accuracy_score: 0.692913385827
+precision_score :0.706666666667
+recall_score: 0.757142857143
+kappa_score: 0.374226152874
+
+
+===========================step 9============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.637795275591
+precision_score :0.648148148148
+recall_score: 0.75
+kappa_score: 0.254561694526
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.677165354331
+precision_score :0.693333333333
+recall_score: 0.742857142857
+kappa_score: 0.342135186355
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.570866141732
+precision_score :0.570776255708
+recall_score: 0.892857142857
+kappa_score: 0.0729927007299
+
+
+
+
+XGboost results:
+accuracy_score: 0.700787401575
+precision_score :0.707792207792
+recall_score: 0.778571428571
+kappa_score: 0.388262137153
+
+
+===========================step 10============================
+
+
+Multi-layer Perceptron results:
+accuracy_score: 0.648221343874
+precision_score :0.668918918919
+recall_score: 0.712230215827
+kappa_score: 0.284424953125
+
+
+
+
+K Nearest neighbor results:
+accuracy_score: 0.711462450593
+precision_score :0.72602739726
+recall_score: 0.762589928058
+kappa_score: 0.413998794301
+
+
+
+
+Logistic regression results:
+accuracy_score: 0.549407114625
+precision_score :0.556561085973
+recall_score: 0.884892086331
+kappa_score: 0.0269887322043
+
+
+
+
+XGboost results:
+accuracy_score: 0.735177865613
+precision_score :0.74
+recall_score: 0.798561151079
+kappa_score: 0.460451347996
+
+
+MLP confusion matrix
+
+[[65 49]
+ [40 99]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.620231     0.634134   0.73408    0.219231
+standard dev   0.0250606    0.0247606  0.0443367  0.0524098
+last val       0.648221     0.668919   0.71223    0.284425
+min val        0.572549     0.596273   0.678571   0.122494
+max val        0.653543     0.680556   0.821429   0.29746
+
+
+
+
+KNN confusion matrix
+
+[[ 74  40]
+ [ 33 106]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.679131     0.689458   0.759116   0.344487
+standard dev   0.0220297    0.0222234  0.0292612  0.0463633
+last val       0.711462     0.726027   0.76259    0.413999
+min val        0.647059     0.64881    0.707143   0.271429
+max val        0.72549      0.726027   0.821429   0.436909
+
+
+
+
+Logistic Regression confusion matrix
+
+[[ 16  98]
+ [ 16 123]]
+
+
+                accuracy    precision     recall       kappa
+------------  ----------  -----------  ---------  ----------
+mean           0.553026     0.560528   0.862061    0.0406808
+standard dev   0.0205952    0.0112949  0.0443405   0.0411164
+last val       0.549407     0.556561   0.884892    0.0269887
+min val        0.521569     0.542986   0.764286   -0.0225352
+max val        0.588235     0.579186   0.914286    0.112676
+
+
+
+
+XGBoost
+
+[[ 75  39]
+ [ 28 111]]
+
+
+                accuracy    precision     recall      kappa
+------------  ----------  -----------  ---------  ---------
+mean           0.704653     0.706902   0.791999   0.395308
+standard dev   0.0219554    0.0221431  0.0267732  0.0463999
+last val       0.735178     0.74       0.798561   0.460451
+min val        0.662745     0.660714   0.757143   0.30381
+max val        0.737255     0.74       0.842857   0.461466
+
+
+XGBoost Feature importances: 
+Feature Importance (gain):
+
+  Score  Parameter
+-------  --------------------
+9.47721  k1_blocks_per_grid
+8.50608  k2_blocks_per_grid
+5.97672  k2_threads_per_block
+5.15299  k1_threads_per_block
+4.00849  k2_shared_mem_B
+3.87441  k1_shared_mem_B
+
+
+Feature Importance (weight):
+
+  Score  Parameter
+-------  --------------------
+    155  k2_blocks_per_grid
+    120  k1_blocks_per_grid
+    116  k1_threads_per_block
+     82  k2_threads_per_block
+     57  k1_shared_mem_B
+     46  k2_shared_mem_B
+
+
+Feature Importance (cover):
+
+  Score  Parameter
+-------  --------------------
+321.449  k1_blocks_per_grid
+286.852  k2_shared_mem_B
+265.844  k2_blocks_per_grid
+249.642  k2_threads_per_block
+221.212  k1_threads_per_block
+200.9    k1_shared_mem_B
+
+
 testing for all variables ===============================================================================
 STARTING TRAINING
 considering variables: ['k1_blocks_per_grid', 'k2_blocks_per_grid', 'k1_threads_per_block', 'k2_threads_per_block', 'k1_registers', 'k2_registers', 'k1_shared_mem_B', 'k2_shared_mem_B']

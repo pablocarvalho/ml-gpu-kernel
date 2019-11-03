@@ -19,6 +19,9 @@ import numpy
 import tabulate
 from scipy.stats import ttest_ind
 import argparse
+import os
+from sklearn.metrics import precision_recall_curve
+from funcsigs import signature
 
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
@@ -38,6 +41,9 @@ parser.add_argument("-o","--output", type=str, help="outputs a that contains the
 parser.add_argument("-v","--verbose", help="prints detailed accuracy, precision, recall and kappa score for each fold",action='store_true')
 parser.add_argument("-g","--grid-search", help="applies grid-search to the classifiers",action='store_true')
 parser.add_argument("-f","--features", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
+parser.add_argument("-p","--precision-recall", type=str, help="input a path to precision-recall plots to be saved")
+parser.add_argument("-c","--custom-variables", nargs='*', help="run also with a set of user selected variables. Ex: k1_shared_mem,k2_shared_mem,k1_registers,k2_registers")
+
 args = parser.parse_args()
 
 inputFile = args.input
@@ -48,12 +54,18 @@ outputfile = args.output
 features = args.features
 verbose = False
 gridSearch= False
+precisionRecallPath = args.precision_recall
+userVariables = []
+gridSearchStr=""
+
+userVariables = args.custom_variables
 
 if(args.verbose):
 	verbose = True
 
 if(args.grid_search):
 	gridSearch=True
+	gridSearchStr="GRID_SEARCH_"
 
 if (mode == 'ce' and seed is None):
 	seed = 929416
@@ -180,10 +192,43 @@ def evaluateVariables(X,y):
 
 	return kBest1,kBest2,rfe
 
+def prepare_canvas():
+	plt.xlabel('Recall')
+	plt.ylabel('Precision')
+	plt.ylim([0.0, 1.05])
+	plt.xlim([0.0, 1.0])
+
+def plot_precision_recall(filename,filepath,classifier,Xtest,Ytest,lineColor,flush=False):
+
+	if( gridSearch == True):
+		classifier = classifier.best_estimator_
+
+	y_score = classifier.predict_proba(Xtest)
+	precision, recall, _ = precision_recall_curve(Ytest, y_score[:, 1])
+
+	# In matplotlib < 1.5, plt.fill_between does not have a 'step' argument
+
+	legend = str(type(classifier))
+	legend = legend.split('.')[-1]
+	legend = legend.replace('>',"")
+	legend = legend.replace('\'',"")
+	step_kwargs = ({'step': 'post'}
+				if 'step' in signature(plt.fill_between).parameters
+				else {})
+	plt.step(recall, precision, color=lineColor,
+			where='post',label=legend)
+	# plt.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+	
+	plt.legend()
+
+	finalPath = os.path.join(filepath,filename)
+
+	if flush:
+		plt.savefig(finalPath)
+		plt.clf()
 
 
-
-def train_and_test(origin,origin_Y):
+def train_and_test(origin,origin_Y,experimentTag=""):
 
 
 	splits = 10
@@ -227,7 +272,7 @@ def train_and_test(origin,origin_Y):
 		clf = GridSearchCV(MLPClassifier(alpha=1e-5,random_state=1, validation_fraction = 0.22),n_jobs=8,cv=skf,param_grid = MLP_params,refit=True,return_train_score=True)
 		knn = GridSearchCV(KNeighborsClassifier(),n_jobs=8,cv=skf,param_grid = KNN_params,refit=True,return_train_score=True)
 		logistic = GridSearchCV(linear_model.LogisticRegression(),n_jobs=8,cv=skf,param_grid = LR_params,refit=True,return_train_score=True)
-		xgb = GridSearchCV(XGBClassifier(nthread=6),n_jobs=8,cv=skf,param_grid = XGB_params,refit=True,return_train_score=True)
+		xgb = GridSearchCV(XGBClassifier(),cv=skf,param_grid = XGB_params,refit=True,return_train_score=True)
 
 
 	step = 1
@@ -266,6 +311,14 @@ def train_and_test(origin,origin_Y):
 			print "recall_score: "+ str(mlp_results.recalls[mlp_results.lastPos-1])
 			print "kappa_score: "+ str(mlp_results.kappas[mlp_results.lastPos-1])
 			print "\n"
+			
+		
+		if(precisionRecallPath is not None and step - 1 == splits):
+			prepare_canvas()
+			inputFilePath = os.path.basename(inputFile)
+			filename = experimentTag+"_" +inputFilePath + ".svg"			
+			plot_precision_recall(filename,precisionRecallPath,clf,origin.iloc[test],origin_Y.iloc[test],'r')
+
 
 
 		knn.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -285,6 +338,10 @@ def train_and_test(origin,origin_Y):
 			print "kappa_score: "+ str(knn_results.kappas[knn_results.lastPos-1])
 			print "\n"
 
+		if(precisionRecallPath is not None and step - 1 == splits):
+			inputFilePath = os.path.basename(inputFile)
+			filename = experimentTag+"_" +inputFilePath + ".svg"
+			plot_precision_recall(filename,precisionRecallPath,knn,origin.iloc[test],origin_Y.iloc[test],'g')
 
 		logistic.fit(origin.iloc[train], origin_Y.iloc[train])
 		logistic_prediction = logistic.predict(origin.iloc[test])
@@ -302,6 +359,11 @@ def train_and_test(origin,origin_Y):
 			print "recall_score: "+ str(logistic_results.recalls[logistic_results.lastPos-1])
 			print "kappa_score: "+ str(logistic_results.kappas[logistic_results.lastPos-1])
 			print "\n"
+		
+		if(precisionRecallPath is not None and step - 1 == splits):
+			inputFilePath = os.path.basename(inputFile)
+			filename = experimentTag+"_" +inputFilePath + ".svg"
+			plot_precision_recall(filename,precisionRecallPath,logistic,origin.iloc[test],origin_Y.iloc[test],'b')
 
 		xgb.fit(origin.iloc[train], origin_Y.iloc[train])
 		xgb_prediction = xgb.predict(origin.iloc[test])
@@ -319,7 +381,13 @@ def train_and_test(origin,origin_Y):
 			print "recall_score: "+ str(xgb_results.recalls[xgb_results.lastPos-1])
 			print "kappa_score: "+ str(xgb_results.kappas[xgb_results.lastPos-1])			
 			print "\n"
-					
+		
+		if(precisionRecallPath is not None and step - 1 == splits):
+			inputFilePath = os.path.basename(inputFile)
+			filename = experimentTag+"_" +inputFilePath + ".svg"			
+			plot_precision_recall(filename,precisionRecallPath,xgb,origin.iloc[test],origin_Y.iloc[test],'black',True)
+			
+
 			
 
 	print "MLP confusion matrix\n"
@@ -364,7 +432,6 @@ def train_and_test(origin,origin_Y):
 	print "Feature Importance (gain):\n"
 	print tabulate.tabulate(data, headers=headers)	 
 	print "\n"
-
 
 	weightGain = None
 	if(gridSearch == True):
@@ -432,7 +499,7 @@ for variables in rfe:
 			print "considering variables: " + str(list(origin_copy.columns.values))
 
 			origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
-			output_frame = train_and_test(origin_copy,origin_Y)
+			output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"RFE")
 			if(outputfile is not None):								
 				filename = mode + " RFE.csv"			
 				output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
@@ -444,11 +511,31 @@ for variables in rfe:
 			print "considering variables: " + str(list(origin_copy.columns.values))
 
 			origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
-			output_frame = train_and_test(origin_copy,origin_Y)			
+			output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"RFE")			
 			if(outputfile is not None):				
 				filename = mode + " RFE.csv"
 				output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
 
+
+if(len(userVariables) > 0):
+	print "testing for user selected variables ==============================================================================="
+	
+
+	dropVars = list(set(origin.columns.values) - set(userVariables))
+	
+	origin_copy = origin
+	
+	for drop in dropVars:
+		origin_copy = origin_copy.drop([drop],axis = 1)
+
+	print "STARTING TRAINING"
+	print "considering variables: " + str(list(origin_copy.columns.values))
+
+	origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
+	output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"USER_VARS")			
+	if(outputfile is not None):
+		filename = mode + "_USER_VARS_NO_RFE.csv"
+		output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
 	
 
 print "testing for all variables ==============================================================================="
@@ -456,8 +543,9 @@ print "testing for all variables ===============================================
 print "STARTING TRAINING"
 print "considering variables: " + str(list(origin.columns.values))
 origin = DataFrame(scale(origin), index=origin.index, columns=origin.columns)
-output_frame = train_and_test(origin,origin_Y)
+output_frame = train_and_test(origin,origin_Y,gridSearchStr+"ALL_VARS")
 if(outputfile is not None):
-	filename = mode + "_NO_RFE.csv"
+	filename = mode + "_ALL_VARS_NO_RFE.csv"
 	output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
+
 

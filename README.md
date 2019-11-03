@@ -3,8 +3,11 @@
 - Python 2.7 (Anaconda Distribution is highly suggested)
   - https://www.anaconda.com/distribution/
 
-- XGboost python libraries
+- XGboost python libraries ( at least version 0.82 to avoid bugs  )
   - follow the steps in https://pypi.org/project/xgboost/
+
+- funcsigs library
+  - follow the steps in https://pypi.org/project/funcsigs/
 
 - sqlite3
   - for a friendly experience when consulting the databases install DB Browser for SQLite   
