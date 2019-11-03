@@ -37,12 +37,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-m","--mode", type=str, choices=['ce','attempts'], help="mode to execute, ce stands for interference and attempts to concurrency", required=True)
 parser.add_argument("-s","--seed", type=int, help="seed used for randomizing folds creation. Original seed from paper will be used if not set")
 parser.add_argument("-i","--input",type=str, help="input file, a CSV separated by semicolons with last column composed by the expected classification", required=True)
-parser.add_argument("-o","--output", type=str, help="outputs a that contains the classification value for each used classifier")
+parser.add_argument("-o","--output-folds", type=str,help="outputs a file for each run (RFE, ALL_VARS, USER_VARS) that contains the classification value for each used classifier")
 parser.add_argument("-v","--verbose", help="prints detailed accuracy, precision, recall and kappa score for each fold",action='store_true')
 parser.add_argument("-g","--grid-search", help="applies grid-search to the classifiers",action='store_true')
 parser.add_argument("-f","--features", type=int, help="number of features to use. If not set, it will use 4 and 6 for attempts and ce modes respectivelly")
 parser.add_argument("-p","--precision-recall", type=str, help="input a path to precision-recall plots to be saved")
-parser.add_argument("-c","--custom-variables", nargs='*', help="run also with a set of user selected variables. Ex: k1_shared_mem,k2_shared_mem,k1_registers,k2_registers")
+parser.add_argument("-c","--custom-variables", nargs='*', help="Additional step running with a set of user selected variables. Ex: k1_shared_mem k2_shared_mem k1_registers k2_registers")
 
 args = parser.parse_args()
 
@@ -50,13 +50,14 @@ inputFile = args.input
 origin = pandas.read_csv(inputFile,sep=';')
 mode = args.mode
 seed = args.seed
-outputfile = args.output
+outputFolds = args.output_folds
 features = args.features
 verbose = False
 gridSearch= False
 precisionRecallPath = args.precision_recall
 userVariables = []
 gridSearchStr=""
+namesAndClassification = DataFrame()
 
 userVariables = args.custom_variables
 
@@ -194,9 +195,7 @@ def evaluateVariables(X,y):
 
 def prepare_canvas():
 	plt.xlabel('Recall')
-	plt.ylabel('Precision')
-	plt.ylim([0.0, 1.05])
-	plt.xlim([0.0, 1.0])
+	plt.ylabel('Precision')	
 
 def plot_precision_recall(filename,filepath,classifier,Xtest,Ytest,lineColor,flush=False):
 
@@ -220,10 +219,11 @@ def plot_precision_recall(filename,filepath,classifier,Xtest,Ytest,lineColor,flu
 	# plt.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
 	
 	plt.legend()
-
-	finalPath = os.path.join(filepath,filename)
-
+	
 	if flush:
+		plt.ylim([0.0, 1.05])
+		plt.xlim([0.0, 1.0])		
+		finalPath = os.path.join(filepath,filename)
 		plt.savefig(finalPath)
 		plt.clf()
 
@@ -284,9 +284,12 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 
 	mlp_prediction_list = []
 	knn_prediction_list = []
-	lrg_prediction_list = []
+	lrg_prediction_list = []	
 	xgb_prediction_list = []
 
+	inputFilePath = os.path.basename(inputFile)
+	inputFilePath = inputFilePath.replace(".csv","")
+	filename = experimentTag+"_" +inputFilePath + ".svg"
 
 	for train, test in skf.split(origin, origin_Y):
 
@@ -298,7 +301,7 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 		clf.fit(origin.iloc[train], origin_Y.iloc[train])
 		mlp_prediction = clf.predict(origin.iloc[test])
 		mpl_confusionmatrix = confusion_matrix(origin_Y.iloc[test], mlp_prediction)
-		mlp_prediction_list.extend(mlp_prediction)		
+		mlp_prediction_list.extend(mlp_prediction)				
 
 		mlp_results.addResult(accuracy_score(origin_Y.iloc[test],mlp_prediction),precision_score(origin_Y.iloc[test],mlp_prediction,average='binary'),
 			recall_score(origin_Y.iloc[test],mlp_prediction,average='binary'),cohen_kappa_score(origin_Y.iloc[test],mlp_prediction))
@@ -314,9 +317,6 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 			
 		
 		if(precisionRecallPath is not None and step - 1 == splits):
-			prepare_canvas()
-			inputFilePath = os.path.basename(inputFile)
-			filename = experimentTag+"_" +inputFilePath + ".svg"			
 			plot_precision_recall(filename,precisionRecallPath,clf,origin.iloc[test],origin_Y.iloc[test],'r')
 
 
@@ -339,8 +339,6 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 			print "\n"
 
 		if(precisionRecallPath is not None and step - 1 == splits):
-			inputFilePath = os.path.basename(inputFile)
-			filename = experimentTag+"_" +inputFilePath + ".svg"
 			plot_precision_recall(filename,precisionRecallPath,knn,origin.iloc[test],origin_Y.iloc[test],'g')
 
 		logistic.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -361,8 +359,6 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 			print "\n"
 		
 		if(precisionRecallPath is not None and step - 1 == splits):
-			inputFilePath = os.path.basename(inputFile)
-			filename = experimentTag+"_" +inputFilePath + ".svg"
 			plot_precision_recall(filename,precisionRecallPath,logistic,origin.iloc[test],origin_Y.iloc[test],'b')
 
 		xgb.fit(origin.iloc[train], origin_Y.iloc[train])
@@ -382,9 +378,7 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 			print "kappa_score: "+ str(xgb_results.kappas[xgb_results.lastPos-1])			
 			print "\n"
 		
-		if(precisionRecallPath is not None and step - 1 == splits):
-			inputFilePath = os.path.basename(inputFile)
-			filename = experimentTag+"_" +inputFilePath + ".svg"			
+		if(precisionRecallPath is not None and step - 1 == splits):						
 			plot_precision_recall(filename,precisionRecallPath,xgb,origin.iloc[test],origin_Y.iloc[test],'black',True)
 			
 
@@ -458,6 +452,25 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 	return output_table
 
 
+def run_experiment(origin_copy, outputDataFrameName , outputFoldsFileNameSufix ):
+	
+	print "STARTING TRAINING"
+	print "considering variables: " + str(list(origin_copy.columns.values))
+
+	origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
+	output_frame = train_and_test(origin_copy,origin_Y,outputDataFrameName)
+	
+	if outputFolds:
+		inputFilePath = os.path.basename(inputFile)	
+		inputFilePath = inputFilePath.replace(".csv","")	
+		filename = "FOLDS_"+gridSearchStr + inputFilePath + outputFoldsFileNameSufix +".csv"
+		filename = os.path.join(outputFolds,filename)
+		output_frame = concat([frameNamesClass,output_frame],axis=1)				
+		output_frame.to_csv(filename,sep=";",index=False,header="k1_names,k2_names,classification,mlp,knn,regression,xgb")
+
+
+frameNamesClass = origin[['k1_name','k2_name','classification']]
+# namesAndClassification = concat(frameNamesClass)
 
 if mode == "ce":
 	classes = [0,1]
@@ -480,10 +493,9 @@ origin_Y = origin.classification
 
 origin = origin.drop(["classification"], axis =1 )
 
-
 kBest1, kBest2, rfe = evaluateVariables(origin,origin_Y)
 
-if (outputfile is not None):
+if outputFolds:
 	output_frame = DataFrame()
 
 print "testing for Recursive Feature Selection ================================================================"
@@ -492,30 +504,8 @@ for variables in rfe:
 	#origin_copy = origin.drop( variables ,axis=1)
 	origin_copy = origin[variables]
 
-	if(mode == "attempts"):			
-		if (len(list(origin_copy.columns.values)) == features):
-			
-			print "STARTING TRAINING"
-			print "considering variables: " + str(list(origin_copy.columns.values))
-
-			origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
-			output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"RFE")
-			if(outputfile is not None):								
-				filename = mode + " RFE.csv"			
-				output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
-
-	elif(mode == "ce"):				
-		if (len(list(origin_copy.columns.values)) == features):			
-
-			print "STARTING TRAINING"
-			print "considering variables: " + str(list(origin_copy.columns.values))
-
-			origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
-			output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"RFE")			
-			if(outputfile is not None):				
-				filename = mode + " RFE.csv"
-				output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
-
+	if (len(list(origin_copy.columns.values)) == features):		
+		run_experiment(origin_copy, gridSearchStr+"RFE","_RFE")
 
 if(len(userVariables) > 0):
 	print "testing for user selected variables ==============================================================================="
@@ -527,25 +517,10 @@ if(len(userVariables) > 0):
 	
 	for drop in dropVars:
 		origin_copy = origin_copy.drop([drop],axis = 1)
-
-	print "STARTING TRAINING"
-	print "considering variables: " + str(list(origin_copy.columns.values))
-
-	origin_copy = DataFrame(scale(origin_copy), index=origin_copy.index, columns=origin_copy.columns)	
-	output_frame = train_and_test(origin_copy,origin_Y,gridSearchStr+"USER_VARS")			
-	if(outputfile is not None):
-		filename = mode + "_USER_VARS_NO_RFE.csv"
-		output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
+	
+	run_experiment(origin_copy, gridSearchStr+"USER_VARS", "_USER_VARS_NO_RFE")
 	
 
 print "testing for all variables ==============================================================================="
 
-print "STARTING TRAINING"
-print "considering variables: " + str(list(origin.columns.values))
-origin = DataFrame(scale(origin), index=origin.index, columns=origin.columns)
-output_frame = train_and_test(origin,origin_Y,gridSearchStr+"ALL_VARS")
-if(outputfile is not None):
-	filename = mode + "_ALL_VARS_NO_RFE.csv"
-	output_frame.to_csv(filename,sep=";",index=False,header="mlp,knn,regression,xgb")
-
-
+run_experiment(origin, gridSearchStr+"ALL_VARS", "_ALL_VARS_NO_RFE")
