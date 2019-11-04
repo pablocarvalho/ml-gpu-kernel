@@ -1,0 +1,4 @@
+./wrong_prediction_counter.py -i output/folds/FOLDS_GRID_SEARCH_tesla_p100_CE_ALL_VARS_NO_RFE.csv 2>&1 | tee wrong_prediction_tesla_p100_interference_all_vars_gridsearch.txt
+./wrong_prediction_counter.py -i output/folds/FOLDS_GRID_SEARCH_tesla_p100_attempts_ALL_VARS_NO_RFE.csv | tee wrong_prediction_tesla_p100_concurrency_all_vars_gridsearch.txt
+./wrong_prediction_counter.py -i output/folds/FOLDS_GRID_SEARCH_rtx-2080_CE_ALL_VARS_NO_RFE.csv | tee wrong_prediction_rtx-2080_interference_all_vars_gridsearch.txt
+./wrong_prediction_counter.py -i output/folds/FOLDS_GRID_SEARCH_rtx-2080_attempts_ALL_VARS_NO_RFE.csv | tee wrong_prediction_rtx-2080_concurrency_all_vars_gridsearch.txt
