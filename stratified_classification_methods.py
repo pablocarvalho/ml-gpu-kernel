@@ -272,7 +272,7 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 		clf = GridSearchCV(MLPClassifier(alpha=1e-5,random_state=1, validation_fraction = 0.22),n_jobs=8,cv=skf,param_grid = MLP_params,refit=True,return_train_score=True)
 		knn = GridSearchCV(KNeighborsClassifier(),n_jobs=8,cv=skf,param_grid = KNN_params,refit=True,return_train_score=True)
 		logistic = GridSearchCV(linear_model.LogisticRegression(),n_jobs=8,cv=skf,param_grid = LR_params,refit=True,return_train_score=True)
-		xgb = GridSearchCV(XGBClassifier(),cv=skf,param_grid = XGB_params,refit=True,return_train_score=True)
+		xgb = GridSearchCV(XGBClassifier(),n_jobs=8,cv=skf,param_grid = XGB_params,refit=True,return_train_score=True)
 
 
 	step = 1
@@ -290,6 +290,8 @@ def train_and_test(origin,origin_Y,experimentTag=""):
 	inputFilePath = os.path.basename(inputFile)
 	inputFilePath = inputFilePath.replace(".csv","")
 	filename = experimentTag+"_" +inputFilePath + ".svg"
+
+	prepare_canvas()
 
 	for train, test in skf.split(origin, origin_Y):
 
